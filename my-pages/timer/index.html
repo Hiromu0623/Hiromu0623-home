@@ -1,251 +1,291 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>タイマー</title>
-     <link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&display=swap" rel="stylesheet">
-     <!--FontGoogleからBIZフォントを入手-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>軽量タイマー</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru:wght@400;700&display=swap" rel="stylesheet">
+    <audio id="alarm" src="alarm.mp3" preload="auto"></audio>
     <style>
         body {
             background-color: cornsilk;
-            font-family: BIZ UDGothic; 
-        } /*さっき入手したやつを使用 */
-        #settext {
-            color: black;
-            font: x-large;
+            font-family: Kosugi Maru;
+        }
+        .timer[hidden] {
+            display: none;
         } 
-        #setbutton {
+        .title[hidden] {
+            display: none;
+        } 
+        .set[hidden] {
+            display: none;
+        }
+        .asup {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .asup[hidden] {
+            display: none;
+        }
+        .astext[hidden] {
+            display: none;
+        }
+        .astext {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .asdown {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .asdown[hidden] {
+            display: none;
+        }
+        .start[hidden] {
+            display: none;
+        }
+        #titlebutton {
             color: black;
-            background: white;
+            background-color: greenyellow;
+            width: 300px;
+            height: 30px;
+            font: Kosugi Maru;
+        }
+        #up {
+            color:white;
+            background-color:red;
+            width: 40px;
+            height: 50px;
+        }
+        #down {
+            color:white;
+            background-color:blue;
+            width: 40px;
+            height: 50px;
+        }
+        button {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        #tistart {
+            color:black;
+            background-color: aqua;
             width: 100px;
-            height: 30px;
+            height:40px;
+
         }
-        .set-UPtext{
-            display: flex;
-            gap: 80px;
-            color: black;
-        }
-        .set-UP {
-            display: flex;
-            gap: 70px;
-        }
-        .set-UP button{
-            width: 50px;
-            height: 60px;
-            background: white;
-            color: black;
-        }
-        .settext {
-             display: flex;
-            gap: 80px;
-            color: black;
-        }
-        .set-Down button{
-            width: 50px;
-            height: 60px;
-            background: white;
-            color: black;
-        }
-        .set-Down {
-            display: flex;
-            gap: 70px;
-        }
-        .timertext {
-            gap: 80px;
-            color: black;
-        }
-        #timertextbutton1 {
-            width: 200px;
-            height: 30px;
+        #greenbt {
+            color: white;
             background-color: green;
-            color: white;
+            width: 100px;
+            height:40px;
         }
-        #timertextbutton2 {
-            width: 200px;
-            height: 30px;
+        #redbt {
+            color:white;
             background-color: red;
-            color: white;
+            width: 100px;
+            height:40px;
         }
-        [hidden] {
-            display: none !important;
-        } /* AI */
+        .red[hidden] {
+            display: none;
+        }
+        .green[hidden] {
+            display: none;
+        }
+        #reset {
+            color: black;
+            background-color: burlywood;
+            width: 100px;
+            height:40px;
+        }
+        .owaribt[hidden] {
+            display: none;
+        }
     </style>
 </head>
 <body>
-	<h1 id="settext">タイマー設定</h1>
-    <div class="timertext2">
-        <h1 id="timerstart">タイマー - 開始</h1>
-        <h1 id="timer"></h1>
+    <div class="title">
+    <h1>軽量タイマー</h1>
+    <h2>このサイトは無駄な機能がないため、<br>サイトの読み込みが高速です。</h2>
+    <button id="titlebutton" onclick="timersetting()">タイマーを設定する</button>
+    </div> <!--タイトル部分-->
+    <div class="set"> 
+    <h1>タイマー設定</h1>
+    <h2>ここで、タイマーの設定を行ってください。</h2>
     </div>
-    <div class="timertext">
-        <h1 id="timerstart">タイマー - 待機中</h1>
-        <h1 id="timer"></h1>
+    <div class="asup">
+    <button id="up" onclick="up(1)">↑</button>
+    <button id="up" onclick="up(2)">↑</button>
+    <button id="up" onclick="up(3)">↑</button>
     </div>
-    <div id="timertextbutton1">
-        <button id = "timertextbutton1" onclick="timerstart()">タイマースタート</button>
+    <div class="astext">
+    <h1 id="secondtext">0秒</h1>
+    <h1 id="mintext">0分</h1>
+    <h1 id="hourtext">0時</h1>
     </div>
-    <div id="timertextbutton2">
-        <button id = "timertextbutton2" onclick="timerstop()">タイマーストップ</button>
+    <div class="asdown">
+    <button id="down" onclick="down(1)">↓</button>
+    <button id="down" onclick="down(2)">↓</button>
+    <button id="down" onclick="down(3)">↓</button>
     </div>
-    <div class="set-UPtext">
-        <h1>秒</h1>
-        <h1>分</h1>
-        <h1>時</h1>
+    <div class="start"> 
+    <button id="tistart" onclick="starts()">タイマースタート</button>
     </div>
-    <div class="set-UP">
-        <button onclick="secondUP()">↑</button>
-        <button onclick="minuteUP()">↑</button>
-        <button onclick="hourUP()">↑</button>
+    <div class="timer">
+    <h1 id="nowtime"></h1>
+    <h1 id="owaritime"></h1>
+    <h1 id="owari"></h1>
     </div>
-    <div class="settext">
-        <h1 id="secondTEXT"></h1>
-        <h1 id="minuteTEXT"></h1>
-        <h1 id="hourTEXT"></h1>
+    <div class="green">
+        <button id="greenbt" onclick="timerstart()">タイマースタート</button>
     </div>
-    <div class="set-Down">
-        <button onclick="secondDOWN()">↓</button>
-        <button onclick="minuteDOWN()">↓</button>
-        <button onclick="hourDOWN()">↓</button>
+    <div class="red">
+        <button id="redbt" onclick="timerstop()">タイマーストップ</button>
     </div>
-    <button id="setbutton" onclick="setOK()">OK</button>
-    <script>
-        let second = 0;
-        let minute = 0;
-        let hour = 0;
-        let setsecond = 0;
-        let setminute = 0;
-        let sethour = 0;
-        let restsecond = 0;
-        let restminute = 0;
-        let resthour = 0;
-        let timerID; 
-        document.querySelector(".timertext").hidden = true;
-        document.getElementById("timertextbutton1").hidden = true;
-        document.querySelector(".timertext2").hidden = true;
-            document.getElementById("timertextbutton2").hidden = true;
-        setup_reset()
-        function secondUP() {
-            setsecond++
-            if (setsecond === 60) {
-                setsecond = 0;
-                setminute++
-                if (setminute === 60) {
-                    setminute = 0;
-                    sethour++;
+    <div class="owaribt">
+        <button id="reset" onclick="reset()">もう一度</button>
+    </div>
+<script>
+    let second = 0;
+    let minute = 0;
+    let hour = 0;
+    let nowsecond = 0;
+    let nowminute = 0;
+    let nowhour = 0;
+    let stop = false;
+    let end = false;
+     hide("set",true);
+     hide("owaribt",true);
+     hide("asup",true);
+     hide("astext",true);
+     hide("asdown",true);
+     hide("start",true);
+     hide("red",true);
+     hide("green",true);
+    function hide(id,or) {
+        document.querySelector("." + id).hidden = or;
+    }
+    function message(ids,message) {
+        document.getElementById(ids).textContent = message;
+    }
+    function timersetting() {
+        hide("title",true);
+        hide("set",false);
+        hide("asup",false);
+        hide("astext",false);
+        hide("asdown",false)
+        hide("start",false)
+    }
+    function up(op) {
+        if (op === 1) {
+            second++;
+            if (second === 60) {
+                second = 0;
+                minute++
+                if (minute === 60) {
+                    minute = 0;
+                    hour++;
                 }
             }
-            setup_reset()
+            update()
+        } else if (op === 2) {
+            minute++;
+            if (minute === 60) {
+                    minute = 0;
+                    hour++;
+                }
+            update()
+        } else if (op === 3) {
+            hour++;
+            update()
         }
-        function minuteUP() {
-            setminute++
-            if (setminute === 60) {
-                setminute = 0;
-                sethour++
-            }
-            setup_reset()
-        }
-        function hourUP() {
-            sethour++
-            setup_reset()
-        }
-        function secondDOWN() {
-            if (sethour === 0 && setminute === 0 && setsecond === 0) return;
-            setsecond--
-            if (setsecond === -1) {
-                setsecond = 59;
-                setminute--
-                if (setminute === -1) {
-                    setminute = 59;
-                    sethour--;
+    }
+    function down(op2) {
+        if (op2 === 1) {
+            if (hour === 0 && minute === 0 && second === 0) return;
+            second--
+            if (second === -1) {
+                second = 59;
+                minute--
+                if (minute === -1) {
+                    minute = 59;
+                    hour--;
                 }
             }
-            setup_reset()
+            update()
+        } else if (op2 === 2) {
+            if (hour === 0 && minute === 0) return;
+            minute--;
+            if (minute === -1) {
+                    minute = 59;
+                    hour--;
+                }
+            update()
+        } else if (op2 === 3) {
+            if (hour === 0) return;
+            hour--;
+            update()
         }
-        function minuteDOWN() {
-            if (sethour === 0 && setminute === 0 && setsecond === 0) return;
-            setminute--
-            if (setminute === -1) {
-                setminute = 59;
-                sethour--
+    }
+    function update() {
+        message("secondtext",second + "秒");
+        message("mintext",minute + "分")
+        message("hourtext",hour + "時")
+    }
+    function starts() {
+        hide("set",true);
+        hide("asup",true);
+        hide("astext",true);
+        hide("asdown",true)
+        hide("start",true)
+        hide("green",false)
+        message("nowtime","経過時間は" + nowhour + "時間" + nowminute + "分" + nowsecond + "秒です。")
+        message("owaritime","終了時間は" + hour + "時間" + minute + "分" + second + "秒です。")
+    }
+    async function timerstart() {
+        stop = false;
+        hide("green",true)
+        hide("red",false)
+        while (stop == false) {
+            hide("owaribt",true)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+             if (nowsecond === second && nowminute === minute && nowhour === hour) {
+                end = true;
+                stop = true;
+                hide("green",true)
+                hide("red",true)
+                message("owari","タイマーが終了しました！")
+                hide("owaribt",false)
+                document.getElementById("alarm").play();
             }
-            setup_reset()
+            if (stop === false) {
+            nowsecond++
+            }
+            if (nowsecond === 60) {
+                nowsecond = 0;
+                nowminute++
+                if (nowminute === 60) {
+                nowminute = 0;
+                nowhour++
+            }
+        }  
+            message("nowtime","経過時間は" + nowhour + "時間" + nowminute + "分" + nowsecond + "秒です。") 
         }
-        function hourDOWN() {
-            if (sethour === 0 && setminute === 0 && setsecond === 0) return;
-            sethour--
-            setup_reset()
-        }
-        function setOK() {
-            document.getElementById("setbutton").hidden = true;
-            document.getElementById("settext").hidden = true;
-
-            document.querySelectorAll(
-                ".set-UPtext, .set-UP, .settext, .set-Down"
-            ).forEach(element => {
-                element.hidden = true;
-            }) //AI
-            timeron()
-        }
-        function setup_reset() {
-            document.getElementById("secondTEXT").textContent = setsecond + "秒";
-            document.getElementById("minuteTEXT").textContent = setminute + "分";
-            document.getElementById("hourTEXT").textContent = sethour + "時";
-        }
-
-        function timeron() {
-            resthour = sethour;
-            restminute = setminute;
-            restsecond = setsecond;
-            document.querySelector(".timertext").hidden = false;
-            document.getElementById("timertextbutton1").hidden = false;
-             document.getElementById("timer").textContent = "残り" + resthour + "時間" + restminute + "分" + restsecond + "秒"
-        }
-
-        function timerstart() {
-            document.querySelector(".timertext").hidden = true;
-            document.getElementById("timertextbutton1").hidden = true;
-            document.querySelector(".timertext2").hidden = false;
-            document.getElementById("timertextbutton2").hidden = false;
-            timerId = setInterval(() => {
-    // 経過時間を増やす
-    second++;
-
-    if (second >= 60) {
-        second = 0;
-        minute++;
     }
-    if (minute >= 60) {
-        minute = 0;
-        hour++;
+    function timerstop() {
+        hide("green",false)
+        hide("red",true)
+        stop = true;
     }
-
-    // 設定時間から経過時間を引く
-    const remaining =
-        (sethour * 3600 + setminute * 60 + setsecond) -
-        (hour * 3600 + minute * 60 + second);
-
-    const remainingSeconds = Math.max(0, remaining);
-
-    resthour = Math.floor(remainingSeconds / 3600);
-    restminute = Math.floor((remainingSeconds % 3600) / 60);
-    restsecond = remainingSeconds % 60;
-
-    // 時間切れで繰り返しを止める
-    if (remainingSeconds === 0) {
-        clearInterval(timerId);
-        timerId = null;
+    function reset() {
+        nowsecond = 0;
+        nowminute = 0;
+        nowhour = 0;
+        message("nowtime","経過時間は" + nowhour + "時間" + nowminute + "分" + nowsecond + "秒です。")
+        timerstart()
     }
-}, 1000);
-
-        }
-
-        function timerstop() {
-            document.querySelector(".timertext").hidden = true;
-            document.getElementById("timertextbutton1").hidden = true;
-            document.querySelector(".timertext2").hidden = false;
-            document.getElementById("timertextbutton2").hidden = false;
-        }
-    </script>
+</script>
 </body>
 </html>
