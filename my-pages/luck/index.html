@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運試し！</title>
+    <style>
+        body {
+            background-color: skyblue; /* 背景gmks */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* フォントは適当() */
+        }
+        #button1 {
+            color: black;
+            background-color: gray;
+            font-family: sans-serif;
+             width: 200px;
+            height: 100px;
+            font-size: larger; /*どうやったらボタンの見た目をよくするんだよ（*/ 
+        }
+    </style>
+</head>
+<body>
+    <!-- html -->
+    <h1>運試し！</h1>
+    <button id="button1" onclick="button1()">挑戦！</button>
+    <h3 id="number"><strong></strong></h2>
+    <h3 id="test"></h3>
+    <dev id="retry"></dev>
+    <script>
+        let clicknumber = Math.floor(Math.random() * 7) + 4; //ランダムの数字よくわからないからここはAI
+        let buttonclicked = 0;
+        let randomnumber = 0;
+        let numbers = Math.floor(Math.random() * 10) + 1;
+        let end = false; 
+        document.getElementById("number").textContent = clicknumber + "回以内に" + numbers + "を当てろ！"
+        function button1() {
+            if (end == true) {
+                return;
+            }
+            //randomはAI参照
+            randomnumber = Math.floor(Math.random() * 10) + 1;
+            buttonclicked++;
+            document.getElementById("test").textContent = buttonclicked + "回目の数字は" + randomnumber + "です！";
+        　　if  (randomnumber == numbers) {
+                document.getElementById("number").textContent = "クリア！！あなたは" + buttonclicked + "回でクリアしました！"
+                end = true
+                document.getElementById("retry").innerHTML ='<button id="buttongreen" onclick="retry2()">もう一回！</button>';
+            }  else if (buttonclicked == clicknumber) {
+                document.getElementById("number").textContent = "ゲームオーバー"
+                end = true
+                document.getElementById("retry").innerHTML ='<button id="buttongreen" onclick="retry2()">もう一回！</button>';
+            }
+        
+
+        }
+        function retry2 () {
+            location.reload();
+        } 
+    </script>
+</body>
+</html>

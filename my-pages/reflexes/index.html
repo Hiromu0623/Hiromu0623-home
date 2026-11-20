@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反射神経ゲーム！</title>
+    <style>
+        body {
+            background-color: cyan;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        #title {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: black;
+            left: 50px;
+            top: 50px;
+        }
+        #button {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color:black;
+            background-color: white;
+            left: 100px;
+            width: 100px;
+            height: 50px;
+            font-size: medium;
+        }
+        #buttonred {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color:white;
+            background-color: red;
+            left: 100px;
+            width: 200px;
+            height: 100px;
+            font-size: large;
+        }
+        #buttongreen {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: white;
+            background-color: green;
+            left: 100px;
+            width: 200px;
+            height: 100px;
+            font-size: large;
+        }
+        #titlered {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: red;
+            left: 50px;
+            top: 50px;
+        }
+        #titlegreen {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: green;
+            left: 50px;
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- html -->
+     
+    <h1 id="title"></h1>
+    <h1 id="titlered"></h1>
+    <h1 id="titlegreen"></h1> <!-- gmksデザインです -->
+    <div id= "buttons"></div>
+    <div id="click"></div>
+
+    </div>
+    <script>
+        let page; //リンクの検索はAI
+        let green;
+        let wait;
+        let time;
+        let time2;
+        pagesearch()
+        function pagesearch() {
+            page = location.search;
+            if (page === "?home") {
+                displaytext("title","反射神経ゲーム！")
+                document.getElementById("buttons").innerHTML ='<button id ="button" onclick="start()">スタート！</button>'; //AI
+            } else if (page === "?play") {
+                displaytext("title","loading...")
+                window.addEventListener("load", function() {
+                    displaytext("title","")
+                    play();
+                })
+            } else if (page === "?play2") {
+                    displaytext("title","")
+                    play()
+            } else {
+                location.href = "?home"
+            }
+        }
+        function displaytext(id,display) {
+            document.getElementById(id).textContent = display
+        }
+        function start() {
+            displaytext("title","ページにリダイレクトしています。")
+            location.href = "?play"
+        }
+        function play() {
+            if (green === true) {
+                return;
+            }
+            green = false;
+            wait = Math.floor(Math.random() * 10) + 1;
+            displaytext("titlered","緑になったらクリック！")
+            document.getElementById("click").innerHTML ='<button id="buttonred" onclick="clicked()">まだ...</button>';
+            setTimeout(function() {
+                time = Date.now();
+                green = true;
+                displaytext("titlered","")
+                displaytext("titlegreen","クリック！！")
+                document.getElementById("click").innerHTML ='<button id="buttongreen" onclick="clicked()">クリック！！</button>';
+            }, wait * 1000);
+        }
+        function clicked() {
+            if (green === false) {
+                green = true;
+                displaytext("titlegreen","");
+                displaytext("titlered","")
+                document.getElementById("click").innerHTML ='';
+                displaytext("title","早い！")
+                document.getElementById("buttons").innerHTML ='<button id="button" onclick="retry()">もう一回！</button>';
+
+            } else {
+                time2 = (Date.now() - time) / 1000;
+                displaytext("titlegreen","");
+                displaytext("titlered","")
+                document.getElementById("click").innerHTML ='';
+                document.getElementById("title").textContent = time2 + "秒でクリックしました！";
+                document.getElementById("buttons").innerHTML ='<button id="button" onclick="retry()">もう一回！</button>';
+            }
+        }
+        function retry() {
+            location.href = "?play2"
+        }
+    </script>
+</body>
+</html>
