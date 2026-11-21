@@ -12,35 +12,103 @@
             font-family: Kosugi Maru;
             background-color: cornsilk;
             text-align: center;
-            font-size: x-large;
+            font-size: large;
         }
-        .menu {
+        .menup {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 40px;
             text-align: center;
+        }
+        .menus {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+        }
+        .menup[hidden] {
+            display: none;
+        }
+        .menus[hidden] {
+            display: none;
+        }
+        @media (max-width: 700px) {
+            .menup {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+        .pc[hidden] {
+            display: none;
+        }
+        .mobilea[hidden] {
+            display: none;
+        }
+        .pc,
+        .mobilea {
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>Discord</h1>
-    <h3>hiromu0623.でDiscordをやっています。</h3>
-    <h2>Discordでやっている活動</h2>
-    <h3>・Discord Bot開発</h3>
-    <h3>・サーバーの作成</h3>
-    <h3>・その他諸々..</h3>
-    <a href="https://hiromu0623.pages.dev/discord/bot">作っているBotを見るにはこちら</a>
-    <br>
-    <a href="https://hiromu0623.pages.dev/discord/support">サポートサーバーに入るにはこちら</a>
-    <br>
-    <a href="https://hiromu0623.pages.dev/discord/user">Hiromu0623のプロフィールを見るにはこちら</a>
-    <div class="menu">
+    <div class="pc">
+        <h1>Discord</h1>
+        <h3>hiromu0623.でDiscordをやっています。</h3>
+        <h2>Discordでやっている活動</h2>
+        <h3>・Discord Bot開発</h3>
+        <h3>・サーバーの作成</h3>
+        <h3>・その他諸々..</h3>
+        <a href="https://hiromu0623.pages.dev/discord/bot">作っているBotを見るにはこちら</a>
+        <br>
+        <a href="https://hiromu0623.pages.dev/discord/support">サポートサーバーに入るにはこちら</a>
+        <br>
+        <a href="https://hiromu0623.pages.dev/discord/user">Hiromu0623のプロフィールを見るにはこちら</a>
+    </div>
+    <div class="mobilea">
+        <h2>Discord</h1>
+        <h4>hiromu0623.でDiscordをやっています。</h4>
+        <h3>Discordでやっている活動</h4>
+        <h4>・Discord Bot開発</h4>
+        <h4>・サーバーの作成</h4>
+        <h4>・その他諸々..</h4>
+        <a href="https://hiromu0623.pages.dev/discord/bot">作っているBotを見るにはこちら</a>
+        <br>
+        <a href="https://hiromu0623.pages.dev/discord/support">サポートサーバーに入るにはこちら</a>
+        <br>
+        <a href="https://hiromu0623.pages.dev/discord/user">Hiromu0623のプロフィールを見るにはこちら</a>
+    </div>
+    <div class="menup">
         <a href="https://hiromu0623.pages.dev/">ホームぺージ</a>
         <a href="https://hiromu0623.pages.dev/scratch/">Scratch</a>
         <a href="https://hiromu0623.pages.dev/discord/">Discord</a>
         <a href="https://hiromu0623.pages.dev/my-pages/">自分が作ったページ</a>
         <a href="https://hiromu0623.pages.dev/youtube">YouTube</a>
         <a href="https://hiromu0623.pages.dev/roblox">Roblox</a>
+        <a href="https://hiromu0623.pages.dev/update">更新履歴</a>
     </div>
+    <div class="menus">
+        <a href="https://hiromu0623.pages.dev/">ホームぺージ</a>
+        <a href="https://hiromu0623.pages.dev/scratch/">Scratch</a>
+        <a href="https://hiromu0623.pages.dev/discord/">Discord</a>
+        <a href="https://hiromu0623.pages.dev/my-pages/">自分が作ったページ</a>
+        <a href="https://hiromu0623.pages.dev/youtube">YouTube</a>
+        <a href="https://hiromu0623.pages.dev/roblox">Roblox</a>
+        <a href="https://hiromu0623.pages.dev/update">更新履歴</a>
+    </div>
+    <script>
+        function updateMenu() {
+            const Mobile = /iPhone|Android.+Mobile/i.test(navigator.userAgent)
+                || window.matchMedia("(max-width: 700px)").matches;
+            document.querySelector(".menup").hidden = Mobile;
+            document.querySelector(".mobilea").hidden = !Mobile;
+            document.querySelector(".pc").hidden = Mobile;
+            document.querySelector(".menus").hidden = !Mobile;
+        }
+
+        updateMenu();
+        window.addEventListener("resize", updateMenu);
+    </script>
 </body>
 </html>

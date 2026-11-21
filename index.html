@@ -6,13 +6,89 @@
 	<meta name="description" content="Hiromu0623のホームページです。">
     <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru:wght@400;700&display=swap" rel="stylesheet">
 	<title>Hiromu0623 - ホームページ</title>
-	<link rel="stylesheet" href="index.css">
-	<script src="index.js" defer></script>
     <link rel="icon" type="image/jpg" href="logo.jpg">
+    <style>
+        body {
+            font-family: "Kosugi Maru", sans-serif;
+            font-size: large;
+            background-color: #f5f5f0;
+            color: #333333;
+            text-align: center;
+        }
+        .text {
+            font-size: x-small;
+        }
+        #textbutton {
+            width: 200px;
+            height: 50px;
+            background-color: white;
+        }
+        .menup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+        .menus {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+        }
+        .menup[hidden] {
+            display: none;
+        }
+        .menus[hidden] {
+            display: none;
+        }
+        @media (max-width: 700px) {
+            body {
+                padding: 0 12px 24px;
+                box-sizing: border-box;
+            }
+            .menup {
+                flex-direction: column;
+                gap: 12px;
+            }
+            h1 {
+                margin: 20px 0 12px;
+                font-size: 1.6rem;
+                line-height: 1.3;
+            }
+            h2 {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+            h3 {
+                margin: 24px 0 12px;
+                font-size: 1.1rem;
+            }
+            h4 {
+                margin: 10px auto;
+                max-width: 520px;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            .text {
+                margin-top: 4px;
+                font-size: 0.75rem;
+            }
+            #textbutton {
+                width: min(200px, 80%);
+                max-width: 100%;
+                height: 50px;
+            }
+            .menus {
+                margin-top: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Hiromu0623のホームページ</h1>
-    <h2>このサイトはAIは使っていないサイトです。<br>まだまだ初心者ですが、よろしくお願いします！</h2>
+    <h2>このサイトはAIは一部しか使っていないサイトです。<br>まだまだ初心者ですが、よろしくお願いします！</h2>
     <button id="textbutton" onclick="himitu()">秘密を見るにはタップ...</button>
     <h3>主な出来事</h3>
     <h4>2021年 - パソコンをもらう</h4>
@@ -28,13 +104,71 @@
     <h4>2026年 - HTMLを知る</h4>
     <h4 class="text" id="himitu6"></h4>
     <h4>2026年 - ある<a href="https://www.youtube.com/shorts/gWY0AemV5jM">動画</a>がバズり、<s>130万回</s>140万回再生を記録する。</h4>
-    <div class="menu">
+    <div class="menup">
         <a href="https://hiromu0623.pages.dev/">ホームぺージ</a>
         <a href="https://hiromu0623.pages.dev/scratch/">Scratch</a>
         <a href="https://hiromu0623.pages.dev/discord/">Discord</a>
         <a href="https://hiromu0623.pages.dev/my-pages/">自分が作ったページ</a>
         <a href="https://hiromu0623.pages.dev/youtube">YouTube</a>
         <a href="https://hiromu0623.pages.dev/roblox">Roblox</a>
+        <a href="https://hiromu0623.pages.dev/update">更新履歴</a>
     </div>
+    <div class="menus">
+        <a href="https://hiromu0623.pages.dev/">ホームぺージ</a>
+        <a href="https://hiromu0623.pages.dev/scratch/">Scratch</a>
+        <a href="https://hiromu0623.pages.dev/discord/">Discord</a>
+        <a href="https://hiromu0623.pages.dev/my-pages/">自分が作ったページ</a>
+        <a href="https://hiromu0623.pages.dev/youtube">YouTube</a>
+        <a href="https://hiromu0623.pages.dev/roblox">Roblox</a>
+        <a href="https://hiromu0623.pages.dev/update">更新履歴</a>
+    </div>
+    <script>
+        let click = 0;
+        let yesno = false;
+
+        //ここはわからんのでAI
+        function updateMenu() {
+            const Mobile = /iPhone|Android.+Mobile/i.test(navigator.userAgent)
+                || window.matchMedia("(max-width: 700px)").matches;
+            document.querySelector(".menup").hidden = Mobile;
+            document.querySelector(".menus").hidden = !Mobile;
+        }
+
+        updateMenu();
+        window.addEventListener("resize", updateMenu);
+
+        function message(id, text) {
+            document.getElementById(id).textContent = text;
+        }
+
+        function himitu() {
+            if (yesno === false && click === 1) {
+            message("textbutton","取り消すならタップ...");
+            yesno = true;
+            click = 0;
+            a()
+        } else if (yesno === false) {
+            message("textbutton","本当にいいの？");
+            click++
+        } else {
+            message("textbutton","秘密を見るにはタップ...");
+            yesno = false;
+            message("himitu1","")
+            message("himitu2","")
+            message("himitu3","")
+            message("himitu4","")
+            message("himitu5","")
+            message("himitu6","")
+        }
+    }
+    function a() {
+        message("himitu1","ちなみに一番最初にインストールしたアプリはMinecraft((")
+        message("himitu2","最初に投稿したのは猫ミーム()")
+        message("himitu3","まだ<h1>ぐらいしか知らなかった((")
+            message("himitu4","(まだhtmlだけでjavascriptとcssは知らなかったという...)")
+            message("himitu5","元150万回再生、登録者数1000人でした")
+            message("himitu6","この時はまだCSSとJAVASCRIPTがあることを知らなかったという...")
+    }
+    </script>
 </body>
 </html>
